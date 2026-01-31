@@ -1,11 +1,12 @@
 [build-system]
-requires = ["setuptools>=61.2"]
+requires = ["setuptools>=77.0.3"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "pygames"
+version = "0.1.0"
 description = "Games for Funsies"
-license = {text = "Unlicense"}
+license = {text = "MIT"}
 authors = [{name = "Kai Jie Chow", email = "kj1chow@gmail.com"}]
 classifiers = [
     "Intended Audience :: Developers",
@@ -14,17 +15,27 @@ classifiers = [
 ]
 urls = {Homepage = '"https://github.com/kjc1998/pyGames/"'}
 requires-python = ">=3.12"
-dependencies = ["typing-extensions"]
-dynamic = ["version"]
+dependencies = [
+    "typing-extensions",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "pytest-cov",
+    "mypy",
+    "pytest-mypy",
+    "black",
+]
 
 [tool.setuptools]
 package-dir = {"" = "src"}
-platforms = ["any"]
-include-package-data = false
 
 [tool.setuptools.packages.find]
 where = ["src"]
 namespaces = false
 
-[tool.setuptools.dynamic]
-version = {file = ["Versionfile"]}
+[tool.mypy]
+mypy_path = "src"
+strict = true
+check_untyped_defs = true

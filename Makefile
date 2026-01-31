@@ -1,36 +1,22 @@
 PYTHON := python
 PIP := pip
-VERSION := $(shell git describe --always --tags --long | $(PYTHON) gitdescribe2pep440.py 2> /dev/null || echo "0.0.0")
-PKG_NAME := pygames
-PACKAGE_FILE := dist/$(PKG_NAME)-$(VERSION).tar.gz
-
-VERSION_FILE=Versionfile
-
-$(VERSION_FILE):
-	@echo "$(VERSION)" > $@
-
-#' help: show this help
-help:
-	@echo "Available commands:"
-	@echo "==================="
-	@grep "^#' " $(_THIS_MAKEFILE) | sed -e "s/^#' //"
-
-
-versionfile: $(VERSION_FILE)
 
 #' package: build package
-package: versionfile
-	$(PIP) install --upgrade build
+package:
+	$(PIP) install --upgrade pip build
 	$(PYTHON) -m build
 
 #' install: install package
 install: package
-	$(PIP) install $(PACKAGE_FILE)
+	$(PIP) install $(shell echo dist/*.whl)
 
 #' devinstall: install package in development mode
-devinstall: versionfile
-	$(PIP) install -e .
-	$(PIP) install -r requirements-dev.txt
+devinstall:
+	$(PIP) install -e ".[dev]"
+
+#' check: run typecheck and formatcheck
+check: typecheck formatcheck
+	@echo "✅ All checks passed!"
 
 #' tests: alias for test
 tests: test
@@ -44,10 +30,12 @@ unittest:
 
 #' typecheck: check type annotations
 typecheck:
-	mypy src \
-		--config-file=mypy.ini \
-		--strict
-	pytest --verbose --mypy-config-file=mypy.ini tests
+	mypy --strict src
+	pytest --mypy --verbose tests
+
+#' formatcheck: run formatter check
+formatcheck:
+	black --check src tests
 
 #' clean: remove all build, test, coverage and Python artifacts
 clean: clean-build clean-pyc clean-test

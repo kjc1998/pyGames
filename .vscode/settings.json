@@ -1,7 +1,0 @@
-{
-  "python.defaultInterpreterPath": "/home/kjchow/miniconda3/envs/pygames/bin/python",
-  "[python]": {
-    "editor.formatOnSave": true,
-    "editor.defaultFormatter": "ms-python.black-formatter"
-  }
-}
