@@ -18,5 +18,5 @@ class Grid:
             raise ValueError
 
     def next_iteration(self) -> "Grid":
-        next_grid = Grid()
+        next_grid = Grid(self.__width, self.__height)
         return next_grid
