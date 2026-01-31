@@ -64,4 +64,4 @@ clean-test:
 	rm -fr .pytest_cache
 	rm -fr .mypy_cache
 
-.PHONY: devinstall install tests clean clean-build clean-pyc clean-test versionfile package
+.PHONY: package install devinstall check tests test unittest typecheck formatcheck clean clean-build clean-pyc clean-test
