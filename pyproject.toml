@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "pygames"
 version = "0.1.0"
 description = "Games for Funsies"
-license = {text = "MIT"}
+license = "MIT"
 authors = [{name = "Kai Jie Chow", email = "kj1chow@gmail.com"}]
 classifiers = [
     "Intended Audience :: Developers",
