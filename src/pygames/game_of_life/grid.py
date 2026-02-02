@@ -1,22 +1,28 @@
-from typing import List, Dict, Tuple
-
-
-def get_next_status(current: bool, neighbours: List[bool]) -> bool:
-    maintain = current and len(neighbours) == 2
-    reproduction = len(neighbours) == 3
-    return maintain or reproduction
+from typing import List
+from tabulate import tabulate
 
 
 class Grid:
-    def __init__(self, width: int, height: int) -> None:
-        self.__width = width
+    def __init__(self, height: int, width: int) -> None:
         self.__height = height
+        self.__width = width
         self.__grid = {(i, j): False for i in range(height) for j in range(width)}
 
-    def set_active(self, row: int, column: int) -> None:
-        if row >= self.__width or column >= self.__height:
-            raise ValueError
+    @property
+    def grid(self) -> List[List[bool]]:
+        return [
+            [self.__grid[(i, j)] for j in range(self.__width)]
+            for i in range(self.__height)
+        ]
 
-    def next_iteration(self) -> "Grid":
-        next_grid = Grid(self.__width, self.__height)
-        return next_grid
+    def toggle(self, row: int, col: int) -> None:
+        if row >= self.__height or col >= self.__width:
+            raise IndexError
+        coord = (row, col)
+        self.__grid[coord] = not self.__grid[coord]
+
+    def __repr__(self) -> str:
+        data = [[int(j) for j in i] for i in self.grid]
+        col_indices = ["", *list(range(self.__width))]
+        table = tabulate(data, headers=col_indices, showindex="always", tablefmt="grid")
+        return str(table)

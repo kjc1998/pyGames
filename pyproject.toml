@@ -17,6 +17,7 @@ urls = {Homepage = '"https://github.com/kjc1998/pyGames/"'}
 requires-python = ">=3.12"
 dependencies = [
     "typing-extensions",
+    "tabulate",
 ]
 
 [project.optional-dependencies]
