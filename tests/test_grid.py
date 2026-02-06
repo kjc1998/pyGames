@@ -38,12 +38,9 @@ class TestGrid:
         assert grid.height == 3
         assert grid.width == 2
         assert grid.grid == [
-            Cell((0, 0), False),
-            Cell((0, 1), False),
-            Cell((1, 0), False),
-            Cell((1, 1), False),
-            Cell((2, 0), False),
-            Cell((2, 1), False),
+            [Cell((0, 0), False), Cell((0, 1), False)],
+            [Cell((1, 0), False), Cell((1, 1), False)],
+            [Cell((2, 0), False), Cell((2, 1), False)],
         ]
 
     def test_empty_grid(self) -> None:
@@ -58,3 +55,15 @@ class TestGrid:
             [Cell((2, 0), False), Cell((2, 1), False)],
         )
         assert grid == expected
+
+    def test_toggle(self, grid: Grid) -> None:
+        grid.toggle(2, 0)
+        assert grid == Grid(
+            [Cell((0, 0), False), Cell((0, 1), False)],
+            [Cell((1, 0), False), Cell((1, 1), False)],
+            [Cell((2, 0), True), Cell((2, 1), False)],
+        )
+
+    def test_toggle_error(self, grid: Grid) -> None:
+        with pytest.raises(ValueError):
+            grid.toggle(3, 0)
