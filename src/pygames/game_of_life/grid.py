@@ -1,11 +1,12 @@
 import dataclasses
-from typing import Any, List, Tuple
+from typing import Any, List
 from tabulate import tabulate
 
 
 @dataclasses.dataclass
 class Cell:
-    coord: Tuple[int, int]
+    row: int
+    col: int
     value: bool
 
     def __repr__(self) -> str:
@@ -29,7 +30,10 @@ class Grid:
 
     @property
     def grid(self) -> List[List["Cell"]]:
-        return [[Cell(cell.coord, cell.value) for cell in row] for row in self.__grid]
+        return [
+            [Cell(cell.row, cell.col, cell.value) for cell in row]
+            for row in self.__grid
+        ]
 
     def __eq__(self, other: "Any") -> bool:
         if isinstance(other, Grid):
@@ -42,19 +46,22 @@ class Grid:
         table = tabulate(data, headers=col_indices, showindex="always", tablefmt="grid")
         return str(table)
 
-    def toggle(self, row: int, col: int) -> None:
+    def get_cell(self, row: int, col: int) -> "Cell":
         if row >= self.height or col >= self.width:
             raise ValueError("invalid coordinate")
-        cell = self.__grid[row][col]
+        return self.__grid[row][col]
+
+    def toggle(self, row: int, col: int) -> None:
+        cell = self.get_cell(row, col)
         cell.value = not cell.value
 
     def __validate(self, *rows: List["Cell"]) -> None:
         height, width = len(rows), len(rows[0]) if rows else 0
-        coords = [cell.coord for row in rows for cell in row]
+        coords = [(cell.row, cell.col) for row in rows for cell in row]
         if coords != [(i, j) for i in range(height) for j in range(width)]:
             raise ValueError("invalid cell arrangement")
 
 
 def build_empty_grid(height: int, width: int) -> "Grid":
-    grid = [[Cell((i, j), False) for j in range(width)] for i in range(height)]
+    grid = [[Cell(i, j, False) for j in range(width)] for i in range(height)]
     return Grid(*grid)
