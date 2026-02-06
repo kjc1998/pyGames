@@ -37,7 +37,7 @@ class TestGrid:
     def test_properties(self, grid: Grid) -> None:
         assert grid.height == 3
         assert grid.width == 2
-        assert grid.grid == [
+        assert grid.rows == [
             [Cell(0, 0, False), Cell(0, 1, False)],
             [Cell(1, 0, False), Cell(1, 1, False)],
             [Cell(2, 0, False), Cell(2, 1, False)],

@@ -18,7 +18,7 @@ class Grid:
         self.__validate(*rows)
         self.__height = height = len(rows)
         self.__width = width = len(rows[0]) if rows else 0
-        self.__grid = list(rows) if height > 0 and width > 0 else []
+        self.__rows = list(rows) if height > 0 and width > 0 else []
 
     @property
     def height(self) -> int:
@@ -29,19 +29,19 @@ class Grid:
         return self.__width
 
     @property
-    def grid(self) -> List[List["Cell"]]:
+    def rows(self) -> List[List["Cell"]]:
         return [
             [Cell(cell.row, cell.col, cell.value) for cell in row]
-            for row in self.__grid
+            for row in self.__rows
         ]
 
     def __eq__(self, other: "Any") -> bool:
         if isinstance(other, Grid):
-            return self.grid == other.grid
+            return self.rows == other.rows
         return False
 
     def __repr__(self) -> str:
-        data = self.__grid
+        data = self.__rows
         col_indices = ["", *list(range(self.width))]
         table = tabulate(data, headers=col_indices, showindex="always", tablefmt="grid")
         return str(table)
@@ -49,7 +49,7 @@ class Grid:
     def get_cell(self, row: int, col: int) -> "Cell":
         if row >= self.height or col >= self.width:
             raise ValueError("invalid coordinate")
-        return self.__grid[row][col]
+        return self.__rows[row][col]
 
     def toggle(self, row: int, col: int) -> None:
         cell = self.get_cell(row, col)
