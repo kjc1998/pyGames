@@ -47,7 +47,7 @@ class Grid:
         return str(table)
 
     def get_cell(self, row: int, col: int) -> "Cell":
-        if row >= self.height or col >= self.width:
+        if row < 0 or row >= self.height or col < 0 or col >= self.width:
             raise ValueError("invalid coordinate")
         return self.__rows[row][col]
 

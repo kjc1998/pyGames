@@ -18,6 +18,7 @@ requires-python = ">=3.12"
 dependencies = [
     "typing-extensions",
     "tabulate",
+    "types-tabulate",
 ]
 
 [project.optional-dependencies]
