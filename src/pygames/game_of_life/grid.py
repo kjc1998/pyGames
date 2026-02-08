@@ -42,7 +42,7 @@ class Grid:
 
     def __repr__(self) -> str:
         data = self.__rows
-        col_indices = ["", *list(range(self.width))]
+        col_indices = ["", *[str(i) for i in range(self.width)]]
         table = tabulate(data, headers=col_indices, showindex="always", tablefmt="grid")
         return str(table)
 
