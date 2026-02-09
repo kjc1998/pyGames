@@ -62,6 +62,7 @@ class Grid:
             raise ValueError("invalid cell arrangement")
 
 
-def build_empty_grid(height: int, width: int) -> "Grid":
-    grid = [[Cell(i, j, False) for j in range(width)] for i in range(height)]
-    return Grid(*grid)
+@dataclasses.dataclass
+class Iteration:
+    number: int
+    grid: "Grid"

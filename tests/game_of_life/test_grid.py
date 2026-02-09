@@ -1,11 +1,15 @@
 import pytest
-from pygames.game_of_life.grid import *
+from pygames.game_of_life.models import *
 
 
 class TestGrid:
     @pytest.fixture
     def grid(self) -> Grid:
-        return build_empty_grid(3, 2)
+        return Grid(
+            [Cell(0, 0, False), Cell(0, 1, False)],
+            [Cell(1, 0, False), Cell(1, 1, False)],
+            [Cell(2, 0, False), Cell(2, 1, False)],
+        )
 
     def test_grid_initialisation(self) -> None:
         Grid()

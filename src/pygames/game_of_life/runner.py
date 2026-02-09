@@ -1,24 +1,18 @@
 import dataclasses
-from pygames.game_of_life import grid as grid_
+from pygames.game_of_life import models
 from typing import List
 
 
-@dataclasses.dataclass
-class Iteration:
-    number: int
-    grid: grid_.Grid
-
-
 class Runner:
-    def get_next_iteration(self, iteration: "Iteration") -> "Iteration":
+    def get_next_iteration(self, iteration: models.Iteration) -> models.Iteration:
         grid = iteration.grid
         new_grid = self.__build_new_grid(grid)
-        return Iteration(iteration.number + 1, new_grid)
+        return models.Iteration(iteration.number + 1, new_grid)
 
-    def __build_new_grid(self, grid: grid_.Grid) -> grid_.Grid:
+    def __build_new_grid(self, grid: models.Grid) -> models.Grid:
         height, width = grid.height, grid.width
 
-        def get_neighbours(row: int, col: int) -> List[grid_.Cell]:
+        def get_neighbours(row: int, col: int) -> List[models.Cell]:
             combinations = [
                 (i, j) for i in range(row - 1, row + 2) for j in range(col - 1, col + 2)
             ]
@@ -28,8 +22,8 @@ class Runner:
             )
             return [grid.get_cell(i, j) for i, j in valids]
 
-        new_grid = grid_.Grid(
-            *[[grid_.Cell(c.row, c.col, c.value) for c in row] for row in grid.rows]
+        new_grid = models.Grid(
+            *[[models.Cell(c.row, c.col, c.value) for c in row] for row in grid.rows]
         )
         for i in range(height):
             for j in range(width):

@@ -1,11 +1,11 @@
 import pytest
-from pygames.game_of_life.grid import *
+from pygames.game_of_life.models import *
 from pygames.game_of_life import runner as runner_
 
 
 class TestRunner:
     @pytest.fixture
-    def iteration(self) -> runner_.Iteration:
+    def iteration(self) -> Iteration:
         """
         Return iteration with following grid layout:
 
@@ -25,12 +25,12 @@ class TestRunner:
             [Cell(4, 0, True), Cell(4, 1, True), Cell(4, 2, True), Cell(4, 3, False), Cell(4, 4, True)],
             # fmt: on
         )
-        return runner_.Iteration(0, grid)
+        return Iteration(0, grid)
 
-    def test_get_next_iteration(self, iteration: runner_.Iteration) -> None:
+    def test_get_next_iteration(self, iteration: Iteration) -> None:
         runner = runner_.Runner()
         observed = runner.get_next_iteration(iteration)
-        expected = runner_.Iteration(
+        expected = Iteration(
             1,
             Grid(
                 # fmt: off
