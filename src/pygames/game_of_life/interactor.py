@@ -14,3 +14,14 @@ class Interactor:
         for coord in coords:
             row, col = coord
             grid.toggle(row, col)
+
+    def run_iterations(
+        self, iteration: models.Iteration, rounds: int
+    ) -> List[models.Iteration]:
+        count = 0
+        result = []
+        while count < rounds:
+            iteration = self.__runner.get_next_iteration(iteration)
+            result.append(iteration)
+            count += 1
+        return result
