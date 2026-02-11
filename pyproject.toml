@@ -41,3 +41,6 @@ namespaces = false
 mypy_path = "src"
 strict = true
 check_untyped_defs = true
+
+[project.scripts]
+pygames = "pygames.cli_main:main"
